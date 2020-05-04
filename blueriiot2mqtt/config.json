@@ -7,7 +7,6 @@
     "url": "https://github.com/LordMike/MBW.BlueRiiot2MQTT",
     "startup": "application",
     "boot": "auto",
-    "map": ["config:rw", "ssl"],
     "options": {
         "MQTT": {
             "Server": null,
