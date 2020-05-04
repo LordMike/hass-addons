@@ -1,22 +1,30 @@
 {
-  "name": "BlueRiiot2MQTT",
-  "version": "latest",
-  "slug": "blueriiot2mqtt",
-  "description": "Add-on to translate between Blue Riiots pool API, and HASS via MQTT",
-  "arch": ["amd64"],
-  "url": "https://github.com/LordMike/MBW.BlueRiiot2MQTT",
-  "startup": "application",
-  "boot": "auto",
-  "map": ["config:rw", "ssl"],
-  "options": {
-	"blueriiot_user": null,
-	"blueriiot_pass": null,
-	"mqtt_server": null
-  },
-  "schema": {
-	"blueriiot_user": "str",
-	"blueriiot_pass": "str",
-	"mqtt_server": "str"
-  },
-  "image": "lordmike/blueriiot2mqtt"
+    "name": "BlueRiiot2MQTT",
+    "version": "latest",
+    "slug": "blueriiot2mqtt",
+    "description": "Add-on to translate between Blue Riiots pool API, and HASS via MQTT",
+    "arch": ["amd64"],
+    "url": "https://github.com/LordMike/MBW.BlueRiiot2MQTT",
+    "startup": "application",
+    "boot": "auto",
+    "map": ["config:rw", "ssl"],
+    "options": {
+        "MQTT": {
+            "Server": null,
+        },
+        "BlueRiiot": {
+            "Username": null,
+            "Password": null,
+        }
+    },
+    "schema": {
+        "MQTT": {
+            "Server": "str"
+        },
+        "BlueRiiot": {
+            "Username": "str",
+            "Password": "str"
+        }
+    },
+    "image": "lordmike/blueriiot2mqtt"
 }
