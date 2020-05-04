@@ -1,8 +1,8 @@
 {
-  "name": "mbw.blueriiot2mqtt",
+  "name": "BlueRiiot2MQTT",
   "version": "latest",
   "slug": "blueriiot2mqtt",
-  "description": "long description",
+  "description": "Add-on to translate between Blue Riiots pool API, and HASS via MQTT",
   "arch": ["amd64"],
   "url": "https://github.com/LordMike/MBW.BlueRiiot2MQTT",
   "startup": "application",
