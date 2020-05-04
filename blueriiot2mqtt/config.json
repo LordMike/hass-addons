@@ -14,9 +14,9 @@
 	"mqtt_server": null
   },
   "schema": {
-	"blueriiot_user": "str(1,)",
-	"blueriiot_pass": "str(1,)",
-	"mqtt_server": "str(1,)"
+	"blueriiot_user": "str",
+	"blueriiot_pass": "str",
+	"mqtt_server": "str"
   },
   "image": "lordmike/blueriiot2mqtt"
 }
