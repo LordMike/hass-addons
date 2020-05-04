@@ -8,7 +8,7 @@
     "startup": "application",
     "boot": "auto",
     "environment": {
-        "EXTRA_CONFIG_FILE": "/data/config.json"
+        "EXTRA_CONFIG_FILE": "/data/options.json"
     },
     "options": {
         "MQTT": {
