@@ -9,11 +9,11 @@
     "boot": "auto",
     "options": {
         "MQTT": {
-            "Server": null,
+            "Server": null
         },
         "BlueRiiot": {
             "Username": null,
-            "Password": null,
+            "Password": null
         }
     },
     "schema": {
