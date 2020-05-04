@@ -1,6 +1,6 @@
 {
   "name": "mbw.blueriiot2mqtt",
-  "version": "1.2",
+  "version": "latest",
   "slug": "blueriiot2mqtt",
   "description": "long description",
   "arch": ["amd64"],
