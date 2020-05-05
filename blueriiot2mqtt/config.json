@@ -12,11 +12,21 @@
     },
     "options": {
         "MQTT": {
-            "Server": null
+            "Server": null,
+            "Port": null,
+            "Username": null,
+            "Password": null
         },
         "BlueRiiot": {
             "Username": null,
             "Password": null
+        },
+        "HASS": {
+            "DiscoveryPrefix": null,
+            "BlueRiiotPrefix": null
+        },
+        "Proxy": {
+            "Uri": null
         }
     },
     "schema": {
