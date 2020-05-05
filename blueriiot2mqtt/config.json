@@ -22,9 +22,9 @@
     "schema": {
         "MQTT": {
             "Server": "str",
-			"Port": "port?",
-			"Username": "str?",
-			"Password": "str?"
+            "Port": "port?",
+            "Username": "str?",
+            "Password": "str?"
         },
         "BlueRiiot": {
             "Username": "str",
