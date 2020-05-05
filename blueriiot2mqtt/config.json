@@ -22,20 +22,20 @@
     "schema": {
         "MQTT": {
             "Server": "str",
-			"Port": "port",
-			"Username": "str",
-			"Password": "str"
+			"Port": "port?",
+			"Username": "str?",
+			"Password": "str?"
         },
         "BlueRiiot": {
             "Username": "str",
             "Password": "str"
         },
         "HASS": {
-            "DiscoveryPrefix": "str",
-            "BlueRiiotPrefix": "str"
+            "DiscoveryPrefix": "str?",
+            "BlueRiiotPrefix": "str?"
         },
         "Proxy": {
-            "Uri": "url"
+            "Uri": "url?"
         }
     },
     "image": "lordmike/blueriiot2mqtt-{arch}"
