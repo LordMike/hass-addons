@@ -13,20 +13,13 @@
     "options": {
         "MQTT": {
             "Server": null,
-            "Port": null,
-            "Username": null,
-            "Password": null
+            "Port": 1883,
+            "Username": "",
+            "Password": ""
         },
         "BlueRiiot": {
             "Username": null,
             "Password": null
-        },
-        "HASS": {
-            "DiscoveryPrefix": null,
-            "BlueRiiotPrefix": null
-        },
-        "Proxy": {
-            "Uri": null
         }
     },
     "schema": {
@@ -39,13 +32,6 @@
         "BlueRiiot": {
             "Username": "str",
             "Password": "str"
-        },
-        "HASS": {
-            "DiscoveryPrefix": "str?",
-            "BlueRiiotPrefix": "str?"
-        },
-        "Proxy": {
-            "Uri": "url?"
         }
     },
     "image": "lordmike/blueriiot2mqtt-{arch}"
