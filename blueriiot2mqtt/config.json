@@ -28,5 +28,5 @@
             "Password": "str"
         }
     },
-    "image": "lordmike/blueriiot2mqtt"
+    "image": "lordmike/blueriiot2mqtt:latest-{arch}"
 }
