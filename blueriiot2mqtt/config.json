@@ -19,7 +19,8 @@
         },
         "BlueRiiot": {
             "Username": null,
-            "Password": null
+            "Password": null,
+            "Language": "en"
         }
     },
     "schema": {
@@ -31,7 +32,8 @@
         },
         "BlueRiiot": {
             "Username": "str",
-            "Password": "str"
+            "Password": "str",
+            "Language": "list(fr|es|en|nl|de|it|pt|cs)"
         }
     },
     "image": "lordmike/blueriiot2mqtt-{arch}"
