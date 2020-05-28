@@ -1,6 +1,6 @@
 {
     "name": "BlueRiiot2MQTT",
-    "version": "v0.1.4",
+    "version": "v0.2.0",
     "slug": "blueriiot2mqtt",
     "description": "Add-on to translate between Blue Riiots pool API, and HASS via MQTT",
     "arch": ["amd64", "armv7", "aarch64"],
@@ -36,5 +36,5 @@
             "Language": "list(fr|es|en|nl|de|it|pt|cs)"
         }
     },
-    "image": "lordmike/blueriiot2mqtt-{arch}"
+    "image": "lordmike/blueriiot2mqtt"
 }
