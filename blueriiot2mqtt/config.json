@@ -12,15 +12,25 @@
     },
     "options": {
         "MQTT": {
-            "Server": null,
+            "Server": "REQUIRED",
             "Port": 1883,
             "Username": "",
-            "Password": ""
+            "Password": "",
+			"ClientId": "blueriiot2mqtt"
         },
         "BlueRiiot": {
-            "Username": null,
-            "Password": null,
-            "Language": "en"
+            "Username": "REQUIRED",
+            "Password": "REQUIRED",
+            "Language": "en",
+			"DiscoveryInterval": "12:00:00",
+			"UpdateInterval": "01:00:00",
+			"UpdateIntervalWhenAllDevicesAsleep": "08:00:00",
+			"ReportUnchangedValues": false
+        },
+        "HASS": {
+			"DiscoveryPrefix": "homeassistant",
+			"TopicPrefix": "blueriiot",
+			"EnableHASSDiscovery": true
         }
     },
     "schema": {
@@ -28,12 +38,22 @@
             "Server": "str",
             "Port": "port?",
             "Username": "str?",
-            "Password": "str?"
+            "Password": "str?",
+            "ClientId": "str?"
         },
         "BlueRiiot": {
             "Username": "str",
             "Password": "str",
-            "Language": "list(fr|es|en|nl|de|it|pt|cs)"
+            "Language": "list(fr|es|en|nl|de|it|pt|cs)",
+			"DiscoveryInterval": "str",
+			"UpdateInterval": "str",
+			"UpdateIntervalWhenAllDevicesAsleep": "str",
+			"ReportUnchangedValues": "bool"
+        },
+        "HASS": {
+			"DiscoveryPrefix": "str",
+			"TopicPrefix": "str",
+			"EnableHASSDiscovery": "bool"
         }
     },
     "image": "lordmike/blueriiot2mqtt"
