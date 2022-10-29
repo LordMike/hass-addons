@@ -1,0 +1,41 @@
+configuration:
+  MQTT:
+    Server:
+      Name: MQTT Server
+    Port:
+      Name: MQTT Port, default 1883
+    Username:
+      Name: MQTT Username, leave blank to omit
+    Password:
+      Name: MQTT Password, leave blank to omit
+    ClientId: str?
+      Name: MQTT Client Id, default blueriiot2mqtt
+  BlueRiiot:
+    Username:
+      Name: Blueriiot account username
+    Password:
+      Name: Blueriiot account password
+    Language:
+      Name: Blueriiot api language
+      Description: Some API calls can provide localized text, such as the pool recommendations
+    DiscoveryInterval:
+      Name: How often to perform discovery of new pools
+      Description: "Time to wait between discovery. 12 Hours: '12:00:00', 2 days: '2.00:00:00'"
+    UpdateInterval:
+      Name: Fallback update interval
+      Description: "When updates fail, this interval is used. The app will automatically determine how often pool data is updated, and adjust accordingly. 30 minutes: '00:30:00', 2 hours: '02:00:00'"
+    UpdateIntervalWhenAllDevicesAsleep:
+      Name: Sleeping device update interval
+      Description: "When devices are on standby, this interval is used. 12 hours: '12:00:00', 36 hours: '1.12:00:00'"
+    ReportUnchangedValues:
+      Name: Push unchanged values over MQTT
+      Description: By default, unchanged values are not pushed. This reduces noise, but in some cases, unchanged values are needed.
+    EnableSchedule:
+      Name: Enable scheduling of automatic updates
+  HASS:
+    DiscoveryPrefix:
+      Name: The HASS discovery prefix
+    TopicPrefix:
+      Name: The MQTT topic prefix
+    EnableHASSDiscovery:
+      Name: Enable HASS discovery
