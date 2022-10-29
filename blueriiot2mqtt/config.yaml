@@ -15,11 +15,23 @@ environment:
 options:
   MQTT:
     Server: REQUIRED
+    Port: 1883
     Username: ''
     Password: ''
+    ClientId: blueriiot2mqtt
   BlueRiiot:
     Username: REQUIRED
     Password: REQUIRED
+    Language: en
+    DiscoveryInterval: '12:00:00'
+    UpdateInterval: '01:00:00'
+    UpdateIntervalWhenAllDevicesAsleep: '08:00:00'
+    ReportUnchangedValues: false
+    EnableSchedule: true
+  HASS:
+    DiscoveryPrefix: homeassistant
+    TopicPrefix: blueriiot
+    EnableHASSDiscovery: true
 schema:
   MQTT:
     Server: str
