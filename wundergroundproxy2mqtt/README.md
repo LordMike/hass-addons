@@ -1,6 +1,6 @@
 # WundergroundProxy2MQTT Home Assistant Add-on
 
-Uponor floor heating system add-on for Home Assistant
+Interception proxy for PWS updates for Weather Underground which forwards data to Home Assistant
 
 ## Installation
 
