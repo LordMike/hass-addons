@@ -1,6 +1,6 @@
 ---
 name: WundergroundProxy2MQTT
-version: 0.6.0
+version: 0.6.1
 slug: wundergroundproxy2mqtt
 description: Add-on to intercept WunderGround updates from Personal Weather Stations (PWS), and send them to HASS via MQTT
 arch:
