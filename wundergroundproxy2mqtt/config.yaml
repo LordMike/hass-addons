@@ -1,0 +1,48 @@
+---
+name: WundergroundProxy2MQTT
+version: 0.6.0
+slug: wundergroundproxy2mqtt
+description: Add-on to intercept WunderGround updates from Personal Weather Stations (PWS), and send them to HASS via MQTT
+arch:
+- amd64
+- armv7
+- aarch64
+url: https://github.com/LordMike/MBW.WundergroundProxy2MQTT
+startup: application
+boot: auto
+environment:
+  EXTRA_CONFIG_FILE: "/data/options.json"
+options:
+  MQTT:
+    Server: REQUIRED
+    Port: 1883
+    Username: ''
+    Password: ''
+    ClientId: wundergroundproxy2mqtt
+  Config:
+    WindDirectionAdjust: 0
+  Uponor:
+    Host: REQUIRED
+    UpdateInterval: '00:04:00'
+    DiscoveryInterval: '01:00:00'
+    OperationMode: 'Normal'
+  HASS:
+    DiscoveryPrefix: homeassistant
+    TopicPrefix: wundergroundproxy
+    EnableHASSDiscovery: true
+    ActualWundergoundUrl: http://rtupdate.wunderground.com/weatherstation/updateweatherstation.php
+schema:
+  MQTT:
+    Server: str
+    Port: port?
+    Username: str?
+    Password: str?
+    ClientId: str?
+  Config:
+    WindDirectionAdjust: int
+  HASS:
+    DiscoveryPrefix: str
+    TopicPrefix: str
+    EnableHASSDiscovery: bool
+    ActualWundergoundUrl: str
+image: lordmike/wundergroundproxy2mqtt
