@@ -1,0 +1,45 @@
+---
+name: Nemlig2MQTT
+version: 0.1.0
+slug: nemlig2mqtt
+description: Add-on to communicate between Nemlig.com, and HASS via MQTT
+arch:
+- amd64
+- armv7
+- aarch64
+url: https://github.com/LordMike/MBW.Nemlig2MQTT
+startup: application
+boot: auto
+environment:
+  EXTRA_CONFIG_FILE: "/data/options.json"
+options:
+  MQTT:
+    Server: REQUIRED
+    Port: 1883
+    Username: ''
+    Password: ''
+    ClientId: nemlig2mqtt
+  Nemlig:
+    Username: REQUIRED
+    Password: REQUIRED
+    CheckInterval: '01:00:00'
+  HASS:
+    DiscoveryPrefix: homeassistant
+    TopicPrefix: blueriiot
+    EnableHASSDiscovery: true
+schema:
+  MQTT:
+    Server: str
+    Port: port?
+    Username: str?
+    Password: str?
+    ClientId: str?
+  Nemlig:
+    Username: str
+    Password: str
+    CheckInterval: str?
+  HASS:
+    DiscoveryPrefix: str
+    TopicPrefix: str
+    EnableHASSDiscovery: bool
+image: lordmike/nemlig2mqtt
