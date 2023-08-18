@@ -1,0 +1,47 @@
+---
+name: Uponor2MQTT
+version: 0.4.0
+slug: uponor2mqtt
+description: Add-on to communicate between Uponor floor heating, and HASS via MQTT
+arch:
+- amd64
+- armv7
+- aarch64
+url: https://github.com/LordMike/MBW.Uponor2MQTT
+startup: application
+boot: auto
+environment:
+  EXTRA_CONFIG_FILE: "/data/options.json"
+options:
+  MQTT:
+    Server: REQUIRED
+    Port: 1883
+    Username: ''
+    Password: ''
+    ClientId: uponor2mqtt
+  Uponor:
+    Host: REQUIRED
+    UpdateInterval: '00:04:00'
+    DiscoveryInterval: '01:00:00'
+    OperationMode: 'Normal'
+  HASS:
+    DiscoveryPrefix: homeassistant
+    TopicPrefix: blueriiot
+    EnableHASSDiscovery: true
+schema:
+  MQTT:
+    Server: str
+    Port: port?
+    Username: str?
+    Password: str?
+    ClientId: str?
+  Uponor:
+    Host: str
+    UpdateInterval: str
+    DiscoveryInterval: str
+    OperationMode: list(Normal|ModeWorkaround)
+  HASS:
+    DiscoveryPrefix: str
+    TopicPrefix: str
+    EnableHASSDiscovery: bool
+image: lordmike/uponor2mqtt
