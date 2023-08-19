@@ -13,4 +13,3 @@ Here is a [short Guide](https://www.home-assistant.io/hassio/installing_third_pa
 * [BlueRiiot2MQTT](https://github.com/LordMike/MBW.BlueRiiot2MQTT) - [issues](https://github.com/LordMike/MBW.BlueRiiot2MQTT/issues)
 * [Uponor2MQTT](https://github.com/LordMike/MBW.Uponor2MQTT) - [issues](https://github.com/LordMike/MBW.Uponor2MQTT/issues)
 * [Nemlig2MQTT](https://github.com/LordMike/MBW.Nemlig2MQTT) - [issues](https://github.com/LordMike/MBW.Nemlig2MQTT/issues)
-* [WundergroundProxy2MQTT](https://github.com/LordMike/MBW.WundergroundProxy2MQTT) - [issues](https://github.com/LordMike/MBW.WundergroundProxy2MQTT/issues)
