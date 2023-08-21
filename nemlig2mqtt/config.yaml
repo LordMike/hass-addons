@@ -1,6 +1,6 @@
 ---
 name: Nemlig2MQTT
-version: 0.1.0
+version: 0.2.0
 slug: nemlig2mqtt
 description: Add-on to communicate between Nemlig.com, and HASS via MQTT
 arch:
