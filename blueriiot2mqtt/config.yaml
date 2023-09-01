@@ -1,6 +1,6 @@
 ---
 name: BlueRiiot2MQTT
-version: 0.15.1
+version: 0.15.2
 slug: blueriiot2mqtt
 description: Add-on to translate between Blue Riiots pool API, and HASS via MQTT
 arch:
