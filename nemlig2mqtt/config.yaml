@@ -1,6 +1,6 @@
 ---
 name: Nemlig2MQTT
-version: 0.2.0
+version: 0.3.0
 slug: nemlig2mqtt
 description: Add-on to communicate between Nemlig.com, and HASS via MQTT
 arch:
@@ -23,6 +23,10 @@ options:
     Username: REQUIRED
     Password: REQUIRED
     CheckInterval: '01:00:00'
+    EnableNextDelivery: true
+    EnableDeliveryOptions: true
+    EnableBasket: true
+    EnableBuyBasket: true
   HASS:
     DiscoveryPrefix: homeassistant
     TopicPrefix: nemlig
@@ -38,6 +42,10 @@ schema:
     Username: str
     Password: str
     CheckInterval: str?
+    EnableNextDelivery: bool
+    EnableDeliveryOptions: bool
+    EnableBasket: bool
+    EnableBuyBasket: bool
   HASS:
     DiscoveryPrefix: str
     TopicPrefix: str
