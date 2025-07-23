@@ -1,0 +1,27 @@
+configuration:
+  MQTT:
+    Name: Settings related to MQTT
+    # Server:
+    #   Name: MQTT Server
+    # Port:
+    #   Name: MQTT Port, default 1883
+    # Username:
+    #   Name: MQTT Username, leave blank to omit
+    # Password:
+    #   Name: MQTT Password, leave blank to omit
+    # ClientId: str?
+    #   Name: MQTT Client Id, default blueriiot2mqtt
+  Nemlig:
+    Name: Settings related to Nemlig.com
+    # Username:
+    #   Name: Nemlig.com Username
+    # Password:
+    #   Name: Nemlig.com Password
+  HASS:
+    Name: Settings related to Home Assistant
+    # DiscoveryPrefix:
+    #   Name: The HASS discovery prefix
+    # TopicPrefix:
+    #   Name: The MQTT topic prefix
+    # EnableHASSDiscovery:
+    #   Name: Enable HASS discovery
