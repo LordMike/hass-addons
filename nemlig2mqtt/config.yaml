@@ -1,8 +1,8 @@
 ---
-name: Nemlig2MQTT (beta)
-version: dev
-slug: nemlig2mqtt-dev
-description: Add-on to communicate between Nemlig.com, and HASS via MQTT (BETA)
+name: Nemlig2MQTT
+version: 0.4.1
+slug: nemlig2mqtt
+description: Add-on to communicate between Nemlig.com, and HASS via MQTT
 arch:
 - amd64
 - armv7
