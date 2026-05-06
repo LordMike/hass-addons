@@ -1,0 +1,16 @@
+configuration:
+  dev_server:
+    name: Development server
+    description: Expose the app status/development endpoint through Home Assistant Ingress while static /local builds continue to run.
+  log_level:
+    name: Log level
+    description: Use debug only while diagnosing build or watcher behavior.
+  create_example:
+    name: Create example page
+    description: Create /config/hass-vue/pages/example/index.vue when no pages exist.
+  source_root:
+    name: Source root
+    description: Home Assistant config path that contains pages/ and shared/. Use /config/hass-vue unless you need a custom location.
+  output_root:
+    name: Output root
+    description: Home Assistant config path where built browser modules are written. Keep this under /config/www so Home Assistant can serve it as /local.
