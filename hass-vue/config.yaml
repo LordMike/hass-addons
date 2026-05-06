@@ -1,5 +1,5 @@
 name: hass-vue
-version: 0.4.0
+version: 0.4.1
 slug: hass-vue
 description: Build Vue pages into Home Assistant custom cards, panels, and browser modules
 url: https://github.com/LordMike/hass-vue

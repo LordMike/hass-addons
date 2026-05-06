@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.1
+
+Released: 2026-05-06T13:18:20Z
+
+[GitHub release: 0.4.1](https://github.com/LordMike/hass-vue/releases/tag/0.4.1)
+
+**Changes Since Last Release:**
+[View changes 0.4.0...0.4.1](https://github.com/LordMike/hass-vue/compare/0.4.0...0.4.1)
+
+**Commits:**
+- 049c4cd: Add status page refresh control
+
+
 ## 0.4.0
 
 Released: 2026-05-06T13:01:40Z
