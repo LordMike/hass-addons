@@ -22,11 +22,13 @@ options:
   dev_server: false
   log_level: info
   create_example: true
+  clean_output: false
   source_root: /config/hass-vue
   output_root: /config/www/hass-vue
 schema:
   dev_server: bool
   log_level: list(info|debug)
   create_example: bool
+  clean_output: bool
   source_root: str
   output_root: str

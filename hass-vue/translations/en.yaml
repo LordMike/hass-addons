@@ -8,6 +8,9 @@ configuration:
   create_example:
     name: Create example page
     description: Create /config/hass-vue/pages/example/index.vue when no pages exist.
+  clean_output:
+    name: Clean output
+    description: Remove managed output for pages that no longer exist under the source root. Disabled by default so existing files in the output folder are left alone.
   source_root:
     name: Source root
     description: Home Assistant config path that contains pages/ and shared/. Use /config/hass-vue unless you need a custom location.
