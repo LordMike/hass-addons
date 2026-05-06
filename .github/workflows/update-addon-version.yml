@@ -1,0 +1,274 @@
+name: Update addon version
+
+# Expected repository_dispatch payload:
+# {
+#   "event_type": "addon-release",
+#   "client_payload": {
+#     "source_repo": "LordMike/MBW.Nemlig2MQTT",
+#     "tag": "0.5.4"
+#   }
+# }
+#
+# Tags are intentionally plain Home Assistant add-on versions. Do not prefix
+# them with "v"; v-prefixed tags are rejected to avoid older/stale tag streams.
+on:
+  repository_dispatch:
+    types:
+      - addon-release
+  workflow_dispatch:
+    inputs:
+      source_repo:
+        description: Source repository, for example LordMike/MBW.Nemlig2MQTT
+        required: true
+        type: string
+      tag:
+        description: Release tag, for example 0.5.4. Do not use a v-prefix.
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+# Queue concurrent addon updates to avoid commit and push races.
+concurrency:
+  group: addon-version-updates
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve addon config
+        id: resolve
+        env:
+          DISPATCH_SOURCE_REPO: ${{ github.event.client_payload.source_repo }}
+          DISPATCH_TAG: ${{ github.event.client_payload.tag }}
+          INPUT_SOURCE_REPO: ${{ inputs.source_repo }}
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+
+          # We're now handling a published release dispatch. Manual runs provide
+          # the same source repo and tag values for repair/rerun cases.
+          source_repo="${DISPATCH_SOURCE_REPO:-$INPUT_SOURCE_REPO}"
+          tag="${DISPATCH_TAG:-$INPUT_TAG}"
+
+          if [ -z "$source_repo" ]; then
+            echo "Missing source_repo"
+            exit 1
+          fi
+
+          if [ -z "$tag" ]; then
+            echo "Missing tag"
+            exit 1
+          fi
+
+          # We're assuming source release tags are identical to Home Assistant
+          # add-on versions: plain numeric semver like 0.5.4, with no v-prefix.
+          if ! printf '%s' "$tag" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "Invalid tag '$tag'. Expected a plain version like 0.5.4 with no v-prefix."
+            exit 1
+          fi
+
+          # We're now using current HEAD as the whitelist. A source repo is
+          # allowed only when one add-on config.yaml has a matching url: value.
+          expected_url="https://github.com/${source_repo}"
+          expected_url="$(printf '%s' "$expected_url" | tr '[:upper:]' '[:lower:]' | sed -E 's#/*$##; s#\.git$##')"
+
+          matches="$(
+            find . -mindepth 2 -maxdepth 2 -name config.yaml -print | sort | while read -r config; do
+              url="$(
+                awk '
+                  /^url:[[:space:]]*/ {
+                    value = substr($0, index($0, ":") + 1)
+                    sub(/^[[:space:]]+/, "", value)
+                    sub(/[[:space:]]+$/, "", value)
+                    gsub(/^["'\'']|["'\'']$/, "", value)
+                    print value
+                    exit
+                  }
+                ' "$config"
+              )"
+
+              normalized_url="$(printf '%s' "$url" | tr '[:upper:]' '[:lower:]' | sed -E 's#/*$##; s#\.git$##')"
+
+              if [ "$normalized_url" = "$expected_url" ]; then
+                printf '%s\n' "${config#./}"
+              fi
+            done
+          )"
+
+          # We're now accepting the dispatch only if the current repo structure
+          # maps the source repo to exactly one add-on.
+          match_count="$(printf '%s\n' "$matches" | sed '/^$/d' | wc -l)"
+
+          if [ "$match_count" -eq 0 ]; then
+            echo "No addon config has url: https://github.com/${source_repo}"
+            exit 1
+          fi
+
+          if [ "$match_count" -gt 1 ]; then
+            echo "Multiple addon configs matched https://github.com/${source_repo}:"
+            printf '%s\n' "$matches"
+            exit 1
+          fi
+
+          config="$(printf '%s\n' "$matches" | sed '/^$/d')"
+          version="$tag"
+          changelog="$(dirname "$config")/CHANGELOG.md"
+
+          # We're assuming the target add-on config already has a top-level
+          # version: line, because this workflow updates existing metadata only.
+          if ! grep -qE '^version:[[:space:]]*' "$config"; then
+            echo "$config has no top-level version line"
+            exit 1
+          fi
+
+          # We're now passing one resolved add-on to the remaining steps.
+          {
+            echo "source_repo=$source_repo"
+            echo "tag=$tag"
+            echo "version=$version"
+            echo "config=$config"
+            echo "changelog=$changelog"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Fetch release notes
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_REPO: ${{ steps.resolve.outputs.source_repo }}
+          TAG: ${{ steps.resolve.outputs.tag }}
+        run: |
+          set -euo pipefail
+
+          # We're now fetching the whitelisted source release from GitHub, so
+          # release notes come from the published release instead of the payload.
+          release_json="$(gh api "repos/${SOURCE_REPO}/releases/tags/${TAG}")"
+
+          # We're assuming release notes may be multiline markdown, so they stay
+          # in a temp file instead of a GitHub Actions step output.
+          printf '%s' "$release_json" | jq -r '.body // ""' > "$RUNNER_TEMP/release-body.md"
+
+          # We're now publishing only scalar release metadata as step outputs.
+          {
+            echo "url=$(printf '%s' "$release_json" | jq -r '.html_url')"
+            echo "published_at=$(printf '%s' "$release_json" | jq -r '.published_at')"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Update version
+        env:
+          CONFIG: ${{ steps.resolve.outputs.config }}
+          VERSION: ${{ steps.resolve.outputs.version }}
+        run: |
+          set -euo pipefail
+
+          # We're now updating the matched config.yaml to the published version.
+          perl -0pi -e 's/^version:[^\r\n]*/version: $ENV{VERSION}/m' "$CONFIG"
+
+      - name: Update changelog
+        env:
+          CHANGELOG: ${{ steps.resolve.outputs.changelog }}
+          VERSION: ${{ steps.resolve.outputs.version }}
+          RELEASE_TAG: ${{ steps.resolve.outputs.tag }}
+          RELEASE_URL: ${{ steps.release.outputs.url }}
+          PUBLISHED_AT: ${{ steps.release.outputs.published_at }}
+        run: |
+          set -euo pipefail
+
+          # We're now writing the changelog beside the matched add-on config.
+          # Create the path when this is the first release note.
+          mkdir -p "$(dirname "$CHANGELOG")"
+
+          entry="$RUNNER_TEMP/changelog-entry.md"
+          existing="$RUNNER_TEMP/changelog-existing.md"
+          body="$RUNNER_TEMP/release-body.md"
+
+          # We're assuming the add-on changelog mirrors published GitHub release
+          # notes, with a small wrapper that records the release URL and date.
+          {
+            printf '## %s\n\n' "$VERSION"
+            printf 'Released: %s\n\n' "$PUBLISHED_AT"
+            printf '[GitHub release: %s](%s)\n\n' "$RELEASE_TAG" "$RELEASE_URL"
+
+            if [ -s "$body" ]; then
+              cat "$body"
+              printf '\n'
+            else
+              printf 'No release notes were provided.\n'
+            fi
+          } > "$entry"
+
+          # We're now removing an existing section for this version so reruns
+          # replace notes instead of duplicating them.
+          if [ -f "$CHANGELOG" ]; then
+            awk -v version="$VERSION" '
+              BEGIN {
+                skip = 0
+                target = "## " version
+              }
+              $0 == target {
+                skip = 1
+                next
+              }
+              /^## / && skip {
+                skip = 0
+              }
+              !skip {
+                print
+              }
+            ' "$CHANGELOG" > "$existing"
+          else
+            {
+              printf '# Changelog\n\n'
+            } > "$existing"
+          fi
+
+          # We're now prepending the new entry, preserving a leading changelog
+          # title when present.
+          {
+            if [ -s "$existing" ]; then
+              first_line="$(sed -n '1p' "$existing")"
+              if [ "$first_line" = "# Changelog" ]; then
+                sed -n '1p' "$existing"
+                printf '\n'
+                cat "$entry"
+                printf '\n'
+                tail -n +2 "$existing" | sed '1{/^$/d;}'
+              else
+                cat "$entry"
+                printf '\n'
+                cat "$existing"
+              fi
+            else
+              printf '# Changelog\n\n'
+              cat "$entry"
+            fi
+          } > "$CHANGELOG"
+
+      - name: Commit and push
+        env:
+          CONFIG: ${{ steps.resolve.outputs.config }}
+          CHANGELOG: ${{ steps.resolve.outputs.changelog }}
+          VERSION: ${{ steps.resolve.outputs.version }}
+        run: |
+          set -euo pipefail
+
+          # We're now at the commit point. Only the matched config.yaml and
+          # CHANGELOG.md should differ; clean reruns should not create commits.
+          if git diff --quiet -- "$CONFIG" "$CHANGELOG"; then
+            echo "$CONFIG and $CHANGELOG already match version $VERSION"
+            exit 0
+          fi
+
+          # We're assuming this workflow owns only the matched add-on config and
+          # changelog for this dispatch.
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add "$CONFIG" "$CHANGELOG"
+          git commit -m "Update $(dirname "$CONFIG") to ${VERSION}"
+          git push
