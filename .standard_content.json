@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LordMike/MBW.Tools.GhStandardContent/master/spec/StandardContent.json",
+  "meta": {
+    "repo": "LordMike/hass-addons",
+    "profiles": [
+      "hassAddonRegistryCI",
+      "standardContent"
+    ],
+    "files": [
+      ".gitattributes",
+      ".github/readme.md",
+      ".github/workflows/ci.yml",
+      ".gitignore"
+    ],
+    "last_updated": "2026-07-26T13:15:42.8568108\u002B00:00"
+  }
+}
