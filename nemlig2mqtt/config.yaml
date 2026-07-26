@@ -8,8 +8,6 @@ arch:
 - armv7
 - aarch64
 url: https://github.com/LordMike/MBW.Nemlig2MQTT
-startup: application
-boot: auto
 environment:
   EXTRA_CONFIG_FILE: "/data/options.json"
 options:

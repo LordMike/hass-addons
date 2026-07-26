@@ -1,0 +1,72 @@
+# This file is centrally managed; local edits may be lost.
+
+name: CI
+
+# Contract:
+# - Every direct child directory containing config.yaml is a Home Assistant add-on.
+# - Discovery produces one matrix entry per add-on; no directory list is maintained here.
+# - Each add-on is validated independently using the pinned Home Assistant add-on linter.
+# - This registry CI validates metadata only and produces no publishable artifacts.
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  discover_addons:
+    name: Discover add-ons
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: ubuntu-latest
+    outputs:
+      addons: ${{ steps.discover.outputs.addons }}
+
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Discover add-on directories
+        id: discover
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          addons="$(
+            find . -mindepth 2 -maxdepth 2 -type f -name config.yaml -printf '%h\n' |
+              sed 's#^\./##' |
+              sort |
+              jq -R -s -c 'split("\n") | map(select(length > 0))'
+          )"
+
+          if [ "$addons" = "[]" ]; then
+            echo "No direct child directory contains config.yaml"
+            exit 1
+          fi
+
+          echo "Discovered add-ons: $addons"
+          echo "addons=$addons" >> "$GITHUB_OUTPUT"
+
+  validate_addons:
+    name: Validate ${{ matrix.addon }}
+    needs: discover_addons
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        addon: ${{ fromJSON(needs.discover_addons.outputs.addons) }}
+
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Validate add-on
+        uses: frenck/action-addon-linter@f995494fd84fae6310d23617e66d0e37de4f14eb # v2
+        with:
+          path: ./${{ matrix.addon }}
