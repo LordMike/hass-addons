@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.5.7
+
+Released: 2026-09-29T17:45:44Z
+
+[GitHub release: 0.5.7](https://github.com/LordMike/MBW.Nemlig2MQTT/releases/tag/0.5.7)
+
+## What's Changed
+* Auto: Updating standardized files by @LordMike in https://github.com/LordMike/MBW.Nemlig2MQTT/pull/15
+* Auto: Updating standardized files by @LordMike in https://github.com/LordMike/MBW.Nemlig2MQTT/pull/16
+* Auto: Updating standardized files by @LordMike in https://github.com/LordMike/MBW.Nemlig2MQTT/pull/17
+
+
+**Full Changelog**: https://github.com/LordMike/MBW.Nemlig2MQTT/compare/0.5.6...0.5.7
+
+
 ## 0.5.6
 
 Released: 2026-07-22T19:16:41Z
