@@ -259,7 +259,9 @@ jobs:
 
           # We're now at the commit point. Only the matched config.yaml and
           # CHANGELOG.md should differ; clean reruns should not create commits.
-          if git diff --quiet -- "$CONFIG" "$CHANGELOG"; then
+          # git status (not git diff) so a first release's new, untracked
+          # CHANGELOG.md counts as a change.
+          if [ -z "$(git status --porcelain -- "$CONFIG" "$CHANGELOG")" ]; then
             echo "$CONFIG and $CHANGELOG already match version $VERSION"
             exit 0
           fi
