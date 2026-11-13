@@ -1,0 +1,15 @@
+configuration:
+  pages_dir:
+    name: Pages folder
+    description: Folder with page files (<name>.js). /homeassistant is Home Assistant's config folder, so the default is /config/dashboard-pages as seen from HA.
+  render_timeout_ms:
+    name: Render timeout (ms)
+    description: Maximum time for one render, including fetching entities.
+  ha_url:
+    name: Home Assistant URL (optional)
+    description: Leave empty to use the built-in connection through the Supervisor.
+  ha_token:
+    name: Long-lived token (optional)
+    description: Leave empty to use the built-in connection. Only needed together with a custom URL.
+network:
+  8080/tcp: Render endpoint. Open it in a browser to list and preview pages. HA itself can reach the app on its hostname, port 8080 (shown on the app page).
