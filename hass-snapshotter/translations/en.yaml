@@ -5,11 +5,23 @@ configuration:
   render_timeout_ms:
     name: Render timeout (ms)
     description: Maximum time for one render, including fetching entities.
+  index_page:
+    name: Index page
+    description: Serve the page list at /. Turn off to hide which pages exist; the pages themselves still work.
   ha_url:
     name: Home Assistant URL (optional)
     description: Leave empty to use the built-in connection through the Supervisor.
   ha_token:
     name: Long-lived token (optional)
     description: Leave empty to use the built-in connection. Only needed together with a custom URL.
+  auth_username:
+    name: Username (optional)
+    description: With a password, every request must use HTTP Basic Auth. Leave empty for no authentication.
+  auth_password:
+    name: Password (optional)
+    description: Password for HTTP Basic Auth.
+  auth_header:
+    name: Authorization header (optional)
+    description: "Instead of a username and password: the exact Authorization header value every request must carry, e.g. Bearer <token>."
 network:
   8080/tcp: Render endpoint. Open it in a browser to list and preview pages. HA itself can reach the app on its hostname, port 8080 (shown on the app page).

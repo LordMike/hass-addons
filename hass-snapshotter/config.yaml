@@ -18,8 +18,13 @@ webui: "http://[HOST]:[PORT:8080]/"
 options:
   pages_dir: /homeassistant/dashboard-pages
   render_timeout_ms: 30000
+  index_page: true
 schema:
   pages_dir: str
   render_timeout_ms: int(1000,120000)
+  index_page: bool
   ha_url: url?
   ha_token: password?
+  auth_username: str?
+  auth_password: password?
+  auth_header: password?
