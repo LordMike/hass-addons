@@ -6,7 +6,7 @@ Render Home Assistant data to PNG images for e-paper displays, without a browser
 
 1. [Add this add-on repository](https://github.com/lordmike/hass-addons) to your HA installation
 2. Install this add-on and start it; it connects to Home Assistant by itself
-3. Put pages in `/config/dashboard-pages/<name>.js` and open `http://<ha-host>:10010/` to preview them
+3. Put pages in `/config/dashboard-pages/<name>.js` and open `http://<ha-host>:10010/` to preview them (or use the **Open Web UI** button on the app page)
 
 ## Read more
 
