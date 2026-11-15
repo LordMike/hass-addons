@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.8
+
+Released: 2026-11-15T22:23:18Z
+
+[GitHub release: 0.4.8](https://github.com/LordMike/hass-snapshotter/releases/tag/0.4.8)
+
+**Full Changelog**: https://github.com/LordMike/hass-snapshotter/compare/0.4.7...0.4.8
+
+
 ## 0.4.7
 
 Released: 2026-11-15T22:07:25Z
