@@ -5,6 +5,9 @@ configuration:
   render_timeout_ms:
     name: Render timeout (ms)
     description: Maximum time for one render, including fetching entities.
+  renderer_keep_alive:
+    name: Keep renderer running (seconds)
+    description: 0 starts a fresh renderer process for every render, which keeps memory low when idle. A number of seconds keeps the process after a render and reuses it for the next one, making renders faster (no start-up, fonts already loaded), at the cost of about 85 MB more memory while it is kept. It only helps if renders come more often than this many seconds apart; otherwise the process is ended and the memory freed before it is used again.
   index_page:
     name: Index page
     description: Serve the page list at /. Turn off to hide which pages exist; the pages themselves still work.
